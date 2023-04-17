@@ -22,6 +22,7 @@ import locale
 import os
 import subprocess
 import sys
+import time
 
 import gphoto2 as gp
 
@@ -37,7 +38,7 @@ def main():
     print('Camera file path: {0}/{1}'.format(file_path.folder, file_path.name))
     target = os.path.join('/tmp', file_path.name)
     print('Copying image to', target)
-    sleep(2)
+    time.sleep(2)
     camera_file = camera.file_get(
         file_path.folder, file_path.name, gp.GP_FILE_TYPE_NORMAL)
     camera_file.save(target)
