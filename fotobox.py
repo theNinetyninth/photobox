@@ -228,7 +228,7 @@ class Ui_Form_mod(object):
     if(self.isLive):
       self.isLive=False
       self.tplImage = "init.png"
-      if not fotoboxCfg['nopi']:
+      #if not fotoboxCfg['nopi']:
         #self.camera.stop_preview()
 
     self.entries = None
