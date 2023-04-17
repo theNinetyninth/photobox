@@ -16,9 +16,9 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 
 if not fotoboxCfg['nopi']:
   try:
-    from picamera import PiCamera
+    import gphoto2 as gp
   except ImportError:
-    print("PiCamera not found - operating in simulation mode")
+    print("gphoto2 not found - operating in simulation mode")
     fotoboxCfg['nopi']            = True
   
   try:
@@ -33,14 +33,14 @@ from stat import S_ISREG, ST_MTIME, ST_MODE
 class Ui_Form_mod(object):
   def setupUi(self, Form):
     Form.setObjectName("Form")
-    Form.setWindowTitle("Fotobox")
+    Form.setWindowTitle("Photobox")
     Form.resize(fotoboxCfg['window-width'], fotoboxCfg['window-height'])
     Form.setMinimumSize(QtCore.QSize(fotoboxCfg['window-width'], fotoboxCfg['window-height']))
     Form.setMaximumSize(QtCore.QSize(fotoboxCfg['window-width'], fotoboxCfg['window-height']))
     Form.setHtml("Initializing...")
     self.countdownTime = fotoboxCfg['countdown']
     self.entries = None
-    self.tplFooterOrg = "Fotobox 0.2 · © Florian Knodt · BitBastelei//Adlerweb · www.adlerweb.info"
+    self.tplFooterOrg = "Photobox 0.2.1"
     self.tplImage = "init.png"
     self.tplFooter = self.tplFooterOrg
     self.tplInstruct = "Instruction placeholder"
@@ -56,10 +56,11 @@ class Ui_Form_mod(object):
   def initSystem(self, Form):
     #Camera
     if not fotoboxCfg['nopi']:
-      self.camera = PiCamera()
-      self.camera.hflip = fotoboxCfg['cam-c-hflip']
-      if(fotoboxCfg['cam-p-hflip'] == fotoboxCfg['cam-c-hflip']):
-        fotoboxCfg['cam-p-hflip'] = False
+      self.camera = gp.Camera()
+      self.camera.init()
+      #self.camera.hflip = fotoboxCfg['cam-c-hflip']
+      #if(fotoboxCfg['cam-p-hflip'] == fotoboxCfg['cam-c-hflip']):
+      #  fotoboxCfg['cam-p-hflip'] = False
     self.isLive = False
 
     #Countdown Updater
@@ -114,8 +115,8 @@ class Ui_Form_mod(object):
     if not self.isLive:
       self.tplImage = "liveBack.png"
       if not fotoboxCfg['nopi']:
-        self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
-        print("Enabling camera preview")
+        #self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
+        print("NOT Enabling camera preview")
       self.isLive = True
 
     self.tplFooter = self.tplFooterOrg
@@ -132,9 +133,9 @@ class Ui_Form_mod(object):
     if not self.isLive:
       self.tplImage = "liveBack.png"
       if not fotoboxCfg['nopi']:
-        self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
-        print("Enabling camera preview")
-      self.isLive = True
+        #self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
+        print("NOT Enabling camera preview")
+      #self.isLive = True
 
     self.tplFooter = self.tplFooterOrg
 
@@ -172,13 +173,20 @@ class Ui_Form_mod(object):
     if(self.isLive):
       self.isLive=False
       if not fotoboxCfg['nopi']:
-        self.camera.stop_preview()
+        #self.camera.stop_preview()
         print("Disabling camera preview")
 
     self.lastPhoto = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg"
     if not fotoboxCfg['nopi']:
-      self.camera.resolution = (fotoboxCfg['cam-c-width'], fotoboxCfg['cam-c-height'])
-      self.camera.capture(self.temp+self.lastPhoto)
+      #self.camera.resolution = (fotoboxCfg['cam-c-width'], fotoboxCfg['cam-c-height'])
+      file_path = camera.capture(gp.GP_CAPTURE_IMAGE)
+      target = os.path.join('/tmp', file_path.name)
+      self.camera_file = camera.file_get(
+          file_path.folder, file_path.name, gp.GP_FILE_TYPE_NORMAL)
+      self.camera_file.save(target)
+      subprocess.call(['xdg-open', target])
+
+
     else:
       copyfile(os.path.dirname(os.path.realpath(__file__)) + '/design/dummy.jpg', self.temp+self.lastPhoto)
 
@@ -221,7 +229,7 @@ class Ui_Form_mod(object):
       self.isLive=False
       self.tplImage = "init.png"
       if not fotoboxCfg['nopi']:
-        self.camera.stop_preview()
+        #self.camera.stop_preview()
 
     self.entries = None
     self.entries = (os.path.join(self.save, fn) for fn in os.listdir(self.save))
