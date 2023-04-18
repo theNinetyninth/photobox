@@ -113,7 +113,7 @@ class Ui_Form_mod(object):
     self.tplBtn3 = fotoboxText['btn-empty']
 
     if not self.isLive:
-      self.tplImage = "liveBack.png"
+      self.tplImage = "blackscreen.png"
       if not fotoboxCfg['nopi']:
         #self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
         print("NOT Enabling camera preview")
@@ -131,7 +131,7 @@ class Ui_Form_mod(object):
     self.tplBtn3 = fotoboxText['btn-empty']
 
     if not self.isLive:
-      self.tplImage = "liveBack.png"
+      self.tplImage = "blackscreen.png"
       if not fotoboxCfg['nopi']:
         #self.camera.start_preview(fullscreen=False, window = (fotoboxCfg['cam-p-x'], fotoboxCfg['cam-p-y'], fotoboxCfg['cam-p-width'], fotoboxCfg['cam-p-height']), hflip=fotoboxCfg['cam-p-hflip'])
         print("NOT Enabling camera preview")
