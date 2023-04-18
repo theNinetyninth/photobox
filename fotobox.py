@@ -73,7 +73,7 @@ class Ui_Form_mod(object):
 
     self.lastPhoto = ""
     self.screen = ""
-    self.temp = fotoboxCfg['~/temp']
+    self.temp = fotoboxCfg['$HOME/temp']
     self.save = fotoboxCfg['save']
 
     if not self.temp.endswith('/'):
