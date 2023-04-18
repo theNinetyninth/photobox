@@ -179,14 +179,13 @@ class Ui_Form_mod(object):
     self.lastPhoto = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg"
     if not fotoboxCfg['nopi']:
       #self.camera.resolution = (fotoboxCfg['cam-c-width'], fotoboxCfg['cam-c-height'])
-      file_path = self.camera.capture(gp.GP_CAPTURE_IMAGE)
-      target = os.path.join('/tmp', file_path.name)
-      self.lastPhoto=file_path.name
+      self.lastPhoto = self.camera.capture(gp.GP_CAPTURE_IMAGE)
+      target = os.path.join(self.temp, file_path.name)
       self.camera_file = self.camera.file_get(
           file_path.folder, file_path.name, gp.GP_FILE_TYPE_NORMAL)
-      self.camera_file.save(self.temp+self.lastPhoto)
+      self.camera_file.save(target)
       self.camera.exit()
-      #subprocess.call(['xdg-open', self.temp+self.lastPhoto])
+      subprocess.call(['xdg-open', self.temp+self.lastPhoto])
       
 
 
