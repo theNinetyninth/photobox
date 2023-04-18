@@ -181,7 +181,7 @@ class Ui_Form_mod(object):
       #self.camera.resolution = (fotoboxCfg['cam-c-width'], fotoboxCfg['cam-c-height'])
       file_path = self.camera.capture(gp.GP_CAPTURE_IMAGE)
       target = os.path.join('/tmp', file_path.name)
-      self.camera_file = camera.file_get(
+      self.camera_file = self.camera.file_get(
           file_path.folder, file_path.name, gp.GP_FILE_TYPE_NORMAL)
       self.camera_file.save(target)
       self.camera.exit()
