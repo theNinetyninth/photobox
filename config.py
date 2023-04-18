@@ -17,8 +17,8 @@ fotoboxCfg['cam-c-hflip']     = False # False = Like a camera, True = Like a mir
 
 fotoboxCfg['nopi']            = False #True = Skip rasperry specific modules
 
-fotoboxCfg['temp']            = '/home/paul/pictures/pictures/temp'
-fotoboxCfg['save']            = '/home/paul/pictures/pictures/photobox'
+fotoboxCfg['temp']            = '/home/paul/Pictures/temp'
+fotoboxCfg['save']            = '/home/paul/Pictures/photobox'
 
 fotoboxCfg['countdown']       = 3 # Seconds
 
