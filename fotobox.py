@@ -186,7 +186,7 @@ class Ui_Form_mod(object):
           file_path.folder, self.lastPhoto, gp.GP_FILE_TYPE_NORMAL)
       self.camera_file.save(target)
       self.camera.exit()
-      subprocess.call(['xdg-open', self.temp+self.lastPhoto])
+      #subprocess.call(['xdg-open', self.temp+self.lastPhoto])
       
 
 
