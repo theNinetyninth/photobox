@@ -3,7 +3,7 @@
 # https://roboloco.net/blog/photo-prints-from-the-command-line/
 
 INFILE=$1
-OUTFILE="/tmp/`uuidgen`"
+OUTFILE="/tmp/to_print.jpg"
 
 echo "Converting $INFILE -> $OUTFILE, rotating and resizing as needed"
 convert $INFILE -rotate '90>' -units PixelsPerInch -density 600 -background white -gravity center -resize 3000x4200 -extent 3000x4200 -colorspace cmyk $OUTFILE
