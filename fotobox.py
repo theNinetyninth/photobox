@@ -177,6 +177,7 @@ class Ui_Form_mod(object):
         print("Disabling camera preview")
 
     self.lastPhoto = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg"
+    self.permanentName = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg"
     if not fotoboxCfg['nopi']:
       #self.camera.resolution = (fotoboxCfg['cam-c-width'], fotoboxCfg['cam-c-height'])
       file_path = self.camera.capture(gp.GP_CAPTURE_IMAGE)
@@ -191,7 +192,7 @@ class Ui_Form_mod(object):
 
 
     else:
-      copyfile(os.path.dirname(os.path.realpath(__file__)) + '/design/dummy.jpg', self.temp+self.lastPhoto)
+      copyfile(os.path.dirname(os.path.realpath(__file__)) + '/design/dummy.jpg', self.temp+self.permanentName)
 
     self.screenReview(Form)
 
