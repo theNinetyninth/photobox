@@ -192,7 +192,7 @@ class Ui_Form_mod(object):
 
 
     else:
-      copyfile(os.path.dirname(os.path.realpath(__file__)) + '/design/dummy.jpg', self.temp+self.permanentName)
+      copyfile(os.path.dirname(os.path.realpath(__file__)) + '/design/dummy.jpg', self.temp+self.lastPhoto)
 
     self.screenReview(Form)
 
@@ -218,8 +218,8 @@ class Ui_Form_mod(object):
     self.screenMain(window)
 
   def doConfirm(self, Form):
-    move(self.temp+self.lastPhoto, self.save+self.lastPhoto)
-    print("Saved " + self.save+self.lastPhoto)
+    move(self.temp+self.lastPhoto, self.save+self.permanentName)
+    print("Saved " + self.save+self.permanentName)
     self.screenMain(window)
 
   def retry(self, Form):
